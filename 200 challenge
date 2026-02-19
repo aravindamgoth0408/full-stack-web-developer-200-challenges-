@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>full‑stack 200 · auto device modes</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: #d0deef;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    /* main card – automatically responds to every device width */
+    .roadmap-card {
+      max-width: 1300px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      border-radius: 40px;
+      box-shadow: 0 30px 55px -15px #0e334e, 0 0 0 1px rgba(255, 255, 255, 0.6);
+      padding: 2rem 2rem 2.5rem;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    /* ===== responsive typography & spacing ===== */
+    h1 {
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: 700;
+      color: #103754;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .title-badge {
+      background: #1d5985;
+      color: white;
+      padding: 0.2rem 1.4rem;
+      border-radius: 60px;
+      font-size: clamp(0.8rem, 3vw, 1.2rem);
+      font-weight: 500;
+    }
+
+    /* toolbar – stacks automatically */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      background: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 70px;
+      margin: 1.5rem 0 1.8rem;
+      box-shadow: 0 8px 16px #c1d6ed;
+    }
+
+    .search-wrapper {
+      flex: 3;
+      min-width: 200px;
+      display: flex;
+      align-items: center;
+      background: #eef4fc;
+      border-radius: 60px;
+      padding: 0.2rem 0.2rem 0.2rem 1.5rem;
+      border: 1px solid #b9d2f0;
+    }
+
+    .search-wrapper span {
+      font-size: 1.3rem;
+      margin-right: 6px;
+      color: #1d6091;
+    }
+
+    #searchInput {
+      border: none;
+      background: transparent;
+      padding: 0.8rem 0.5rem;
+      width: 100%;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .progress-pill {
+      background: #1e4465;
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      white-space: nowrap;
+      font-size: 0.95rem;
+    }
+
+    .reset-btn {
+      background: #266397;
+      border: none;
+      color: white;
+      padding: 0.6rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
+      font-size: 0.95rem;
+    }
+
+    .reset-btn:hover {
+      background: #134f80;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 16px;
+      background: #d4e2f0;
+      border-radius: 40px;
+      margin-bottom: 2rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1465a5, #3da2f0);
+      border-radius: 40px;
+      transition: width 0.25s;
+    }
+
+    /* months grid */
+    .months-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .month-block {
+      background: white;
+      border-radius: 2rem;
+      padding: 1.8rem 1.8rem;
+      border-left: 14px solid;
+      box-shadow: 0 12px 28px -18px #1c4f79;
+    }
+
+    /* colorful month borders */
+    .month-block:nth-child(1) { border-left-color: #1360a0; }
+    .month-block:nth-child(2) { border-left-color: #317bb5; }
+    .month-block:nth-child(3) { border-left-color: #4a94c7; }
+    .month-block:nth-child(4) { border-left-color: #64abd9; }
+    .month-block:nth-child(5) { border-left-color: #85c0e9; }
+    .month-block:nth-child(6) { border-left-color: #a7d4f5; }
+
+    .month-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .month-header h2 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: #103c5e;
+    }
+
+    .month-tag {
+      background: #e0eefc;
+      padding: 0.3rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .day-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    /* day item – extremely responsive */
+    .day-item {
+      display: flex;
+      align-items: center;
+      background: #f6fafe;
+      border-radius: 60px;
+      padding: 0.5rem 1rem 0.5rem 0.7rem;
+      border: 1px solid #dae8fc;
+      transition: 0.15s;
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      flex-wrap: wrap;
+    }
+
+    .day-item:hover {
+      background: #e3f0ff;
+      transform: translateX(5px);
+    }
+
+    .day-item input[type="checkbox"] {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border: 2.5px solid #1669a8;
+      border-radius: 8px;
+      margin-right: 14px;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .day-item input[type="checkbox"]:checked {
+      background: #1669a8;
+      border-color: #1669a8;
+    }
+
+    .day-item input[type="checkbox"]:checked::after {
+      content: "✓";
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .day-item a {
+      color: #124b77;
+      text-decoration: none;
+      font-weight: 500;
+      flex: 1;
+      padding: 6px 0;
+      min-width: 180px;  /* ensures link doesn't collapse on small screen */
+    }
+
+    .day-item.completed a {
+      text-decoration: line-through;
+      color: #8faac9;
+    }
+
+    .topic-badge {
+      background: #e1ecf7;
+      border-radius: 30px;
+      padding: 0.25rem 1.2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #19537c;
+      border: 1px solid #b8d2f0;
+      margin-left: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* no result */
+    .no-result {
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 60px;
+      color: #1f5170;
+      font-size: 1.2rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.2rem;
+      justify-content: center;
+      margin-top: 2.8rem;
+      padding-top: 1.5rem;
+      border-top: 2px dashed #b7d1ec;
+    }
+
+    .footer-nav a {
+      background: #d9e9ff;
+      padding: 0.5rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 600;
+      color: #124670;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .footer-nav a:hover {
+      background: #2779b3;
+      color: white;
+    }
+
+    /* ===== automatic device adaptation ===== */
+    /* phone ( ≤ 480 ) */
+    @media (max-width: 480px) {
+      .roadmap-card { padding: 1.2rem 1rem; border-radius: 32px; }
+      .toolbar { flex-direction: column; align-items: stretch; border-radius: 40px; }
+      .search-wrapper { width: 100%; }
+      .progress-pill { text-align: center; }
+      .reset-btn { width: 100%; }
+      .month-block { padding: 1.2rem 1rem; border-left-width: 8px; }
+      .day-item { border-radius: 30px; padding: 0.5rem 0.8rem; }
+      .day-item a { min-width: 140px; }
+      .topic-badge { padding: 0.2rem 0.8rem; }
+    }
+
+    /* tablet (481px – 768px) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .roadmap-card { padding: 1.8rem 1.2rem; }
+      .toolbar { gap: 0.8rem; }
+      .day-item { border-radius: 40px; }
+      .topic-badge { font-size: 0.65rem; padding: 0.2rem 1rem; }
+    }
+
+    /* laptop (769px – 1024px) — default fine, minor adj */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .month-header h2 { font-size: 1.7rem; }
+    }
+
+    /* pc (1025px+) — everything visible, max-width container already */
+  </style>
+</head>
+<body>
+  <div class="roadmap-card">
+    <h1>
+      🗓️ 200‑day full‑stack-web
+      <span class="title-badge">Challenge‑1-200 Days</span>
+    </h1>
+
+    <!-- toolbar (search, progress, reset) -->
+    <div class="toolbar">
+      <div class="search-wrapper">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Search react, sql, docker...">
+      </div>
+      <div class="progress-pill" id="checkedDisplay">0/200</div>
+      <button class="reset-btn" id="resetProgress">reset all</button>
+    </div>
+
+    <!-- progress bar -->
+    <div class="progress-bar-container">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- months will be injected via js (200 days) -->
+    <div id="monthsContainer" class="months-wrapper"></div>
+
+    <!-- footer navigation -->
+    <div class="footer-nav">
+      <a href="#" data-month="0">📘 month 1</a>
+      <a href="#" data-month="1">⚛️ month 2</a>
+      <a href="#" data-month="2">🟢 month 3</a>
+      <a href="#" data-month="3">💾 month 4</a>
+      <a href="#" data-month="4">☁️ month 5</a>
+      <a href="#" data-month="5">🔧 month 6</a>
+      <a href="#">⬆ top</a>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ----- 200 day topics (full) -----
+      const dayTopics = {
+        1:"Learn basic HTML structure",2:"Practice headings, paragraphs, lists",3:"Build a simple HTML page",
+        4:"Learn forms & inputs",5:"Semantic HTML tags",6:"CSS selectors",7:"Flexbox basics",8:"CSS Grid basics",
+        9:"Responsive design",10:"Mini project – static portfolio",11:"JavaScript variables",12:"Functions",
+        13:"Conditionals",14:"Loops",15:"Arrays",16:"Objects",17:"DOM basics",18:"Event listeners",
+        19:"DOM manipulation",20:"Build interactive form",21:"Practice JS functions",22:"Practice DOM events",
+        23:"Practice CSS animations",24:"Combine HTML/CSS/JS",25:"Debugging basics",26:"Mini project – interactive quiz",
+        27:"Review HTML/CSS",28:"Review JavaScript basics",29:"Practice project polish",30:"Finalize Month 1 portfolio",
+        31:"Learn ES6 arrow functions",32:"Practice promises",33:"Async/await exercises",34:"ES6 modules (import/export)",
+        35:"Fetch API basics",36:"Fetch API with JSON",37:"Error handling in fetch",38:"Build mini API project",
+        39:"Intro to React – setup",40:"React components",41:"Props in React",42:"State in React",43:"React events",
+        44:"React forms",45:"React hooks (useState)",46:"React hooks (useEffect)",47:"React project setup",
+        48:"Build To‑Do app – add tasks",49:"Build To‑Do app – delete tasks",50:"Build To‑Do app – edit tasks",
+        51:"Add styling to To‑Do app",52:"Add local storage to To‑Do app",53:"Add filtering to To‑Do app",
+        54:"Debug React app",55:"Review React basics",56:"Practice React hooks",57:"Practice API integration in React",
+        58:"Polish To‑Do app project",59:"Add extra features (dark mode)",60:"Finalize Month 2 React project",
+        61:"Learn Node.js basics – setup & modules",62:"Understand npm & package.json",63:"Learn Node.js event loop",
+        64:"Practice Node.js file system module",65:"Build a simple Node.js script",66:"Intro to Express.js – setup",
+        67:"Express routing basics",68:"Express middleware",69:"REST API basics with Express",70:"Build a simple REST API",
+        71:"Handle GET requests",72:"Handle POST requests",73:"Handle PUT requests",74:"Handle DELETE requests",
+        75:"Practice REST API with JSON data",76:"Connect React frontend to Express API",77:"Fetch data from backend in React",
+        78:"Handle API errors in React",79:"Build full CRUD with React + Express",80:"Debug backend API",
+        81:"Add validation to API",82:"Add logging middleware",83:"Add error handling middleware",84:"Secure API basics",
+        85:"Practice REST API best practices",86:"Mini project – Notes API",87:"Connect Notes API to React frontend",
+        88:"Add extra features to Notes app",89:"Review Node.js & Express",90:"Finalize backend project",
+        91:"Learn SQL basics – tables",92:"SQL queries – SELECT",93:"SQL queries – INSERT",94:"SQL queries – UPDATE",
+        95:"SQL queries – DELETE",96:"SQL joins",97:"SQL constraints",98:"SQL practice project",
+        99:"Intro to MongoDB – setup",100:"MongoDB collections & documents",101:"MongoDB CRUD – insert",
+        102:"MongoDB CRUD – find",103:"MongoDB CRUD – update",104:"MongoDB CRUD – delete",105:"MongoDB queries",
+        106:"MongoDB indexes",107:"Connect MongoDB to Express",108:"Build user signup API",109:"Build user login API",
+        110:"Add password hashing",111:"Add JWT authentication",112:"Add session management",113:"Secure MongoDB queries",
+        114:"Debug database integration",115:"Practice SQL + MongoDB",116:"Mini project – Auth system",
+        117:"Connect Auth system to React frontend",118:"Add extra features (profile page)",119:"Review databases",
+        120:"Finalize database project",121:"Learn JWT basics",122:"Implement JWT authentication",123:"Learn session management",
+        124:"Add sessions to backend",125:"Secure API endpoints",126:"Learn RESTful API design principles",
+        127:"Add error handling to API",128:"Add input validation",129:"Learn API versioning",130:"Practice RESTful API best practices",
+        131:"Intro to deployment – Heroku",132:"Deploy backend to Heroku",133:"Deploy frontend to Netlify",
+        134:"Deploy full stack app",135:"Learn environment variables",136:"Add environment variables to project",
+        137:"Learn CI/CD basics",138:"Practice CI/CD pipeline setup",139:"Debug deployment issues",140:"Review deployment methods",
+        141:"Learn Vercel basics",142:"Deploy React app to Vercel",143:"Learn Netlify basics",144:"Deploy static site to Netlify",
+        145:"Learn Heroku database integration",146:"Connect MongoDB Atlas to Heroku",147:"Secure deployment with HTTPS",
+        148:"Add monitoring tools",149:"Finalize deployment project",150:"Review Month 5 integration & deployment",
+        151:"Learn Git basics",152:"Practice Git branches",153:"Practice Git merges",154:"Learn GitHub pull requests",
+        155:"Practice GitHub workflows",156:"Learn TypeScript basics",157:"Practice TypeScript types",158:"Learn TypeScript interfaces",
+        159:"Practice TypeScript classes",160:"Convert small JS project to TypeScript",161:"Learn Next.js basics",
+        162:"Practice Next.js pages",163:"Practice Next.js routing",164:"Learn Next.js API routes",165:"Build mini Next.js project",
+        166:"Learn React Router basics",167:"Practice nested routes",168:"Practice protected routes",169:"Build routing project",
+        170:"Review advanced frontend",171:"Learn Docker basics",172:"Practice Docker images",173:"Practice Docker containers",
+        174:"Learn Docker Compose",175:"Containerize a Node.js app",176:"Containerize a React app",177:"Connect containers with Docker Compose",
+        178:"Debug Docker setup",179:"Review Docker basics",180:"Finalize Docker project",181:"Plan capstone project",
+        182:"Set up project repo",183:"Build project frontend",184:"Build project backend",185:"Connect frontend & backend",
+        186:"Add database integration",187:"Add authentication system",188:"Add advanced features",189:"Add deployment setup",
+        190:"Debug capstone project",191:"Polish frontend",192:"Polish backend",193:"Polish database",194:"Polish authentication",
+        195:"Polish deployment",196:"Add documentation",197:"Write README & setup guide",198:"Prepare project presentation",
+        199:"Final testing & bug fixes",200:"Showcase capstone project in portfolio"
+      };
+
+      const monthNames = [
+        "Month 1 – HTML/CSS/JS (days 1–30)",
+        "Month 2 – Frontend / React (days 31–60)",
+        "Month 3 – Backend Node/Express (days 61–90)",
+        "Month 4 – Databases (SQL + MongoDB) (days 91–120)",
+        "Month 5 – Integration & Deployment (days 121–150)",
+        "Month 6 – Advanced + Capstone (days 151–200)"
+      ];
+
+      const monthsContainer = document.getElementById('monthsContainer');
+
+      function renderMonths() {
+        let html = '';
+        for (let m = 0; m < 6; m++) {
+          let start = m * 30 + 1;
+          let end = start + 29;
+          html += `<div class="month-block" data-month-index="${m}">`;
+          html += `<div class="month-header"><h2>${monthNames[m]}</h2><span class="month-tag">days ${start}–${end}</span></div>`;
+          html += `<div class="day-list">`;
+
+          for (let d = start; d <= end; d++) {
+            let title = dayTopics[d] || `Day ${d}: project work`;
+            // smart badge
+            let badge = '📌';
+            if (d <= 30) badge = '🧱 html/css';
+            else if (d <= 60) badge = '⚛️ react';
+            else if (d <= 90) badge = '🟢 node';
+            else if (d <= 120) badge = '💾 db';
+            else if (d <= 150) badge = '☁️ deploy';
+            else badge = '🔧 advanced';
+
+            html += `
+              <div class="day-item" data-dayid="${d}">
+                <input type="checkbox" id="day${d}">
+                <a href="Day ${d}/index.html" target="_blank">Day ${d}: ${title}</a>
+                <span class="topic-badge">${badge}</span>
+              </div>
+            `;
+          }
+          html += `</div></div>`;
+        }
+        monthsContainer.innerHTML = html;
+      }
+      renderMonths();
+
+      // ----- search & progress logic -----
+      const searchInput = document.getElementById('searchInput');
+      const monthBlocks = document.querySelectorAll('.month-block');
+      const progressFill = document.getElementById('progressFill');
+      const checkedSpan = document.getElementById('checkedDisplay');
+      const resetBtn = document.getElementById('resetProgress');
+      const checkboxes = () => document.querySelectorAll('input[type="checkbox"]');
+
+      function filterHandler() {
+        const term = searchInput.value.trim().toLowerCase();
+        let anyVisible = false;
+        monthBlocks.forEach(block => {
+          const items = block.querySelectorAll('.day-item');
+          let blockHas = false;
+          items.forEach(item => {
+            const link = item.querySelector('a');
+            if (!link) return;
+            if (term === '' || link.innerText.toLowerCase().includes(term)) {
+              item.style.display = 'flex';
+              blockHas = true;
+              anyVisible = true;
+            } else {
+              item.style.display = 'none';
+            }
+          });
+          block.style.display = blockHas ? 'block' : 'none';
+        });
+
+        let msg = document.getElementById('noResultMsg');
+        if (!anyVisible && term !== '') {
+          if (!msg) {
+            msg = document.createElement('div');
+            msg.id = 'noResultMsg';
+            msg.className = 'no-result';
+            msg.innerText = '✨ no matching topics · try another keyword';
+            monthsContainer.after(msg);
+          }
+        } else if (msg) msg.remove();
+      }
+
+      function updateProgress() {
+        const total = checkboxes().length;
+        const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+        progressFill.style.width = (checked / total) * 100 + '%';
+        checkedSpan.innerText = checked + '/' + total;
+      }
+
+      function loadSaved() {
+        checkboxes().forEach(cb => {
+          const saved = localStorage.getItem(cb.id);
+          if (saved === 'true') {
+            cb.checked = true;
+            cb.closest('.day-item')?.classList.add('completed');
+          } else {
+            cb.checked = false;
+            cb.closest('.day-item')?.classList.remove('completed');
+          }
+        });
+        updateProgress();
+      }
+
+      function handleCheck(e) {
+        const item = e.target.closest('.day-item');
+        if (e.target.checked) {
+          item?.classList.add('completed');
+          localStorage.setItem(e.target.id, 'true');
+        } else {
+          item?.classList.remove('completed');
+          localStorage.setItem(e.target.id, 'false');
+        }
+        updateProgress();
+      }
+
+      function attachListeners() {
+        checkboxes().forEach(cb => {
+          cb.removeEventListener('change', handleCheck);
+          cb.addEventListener('change', handleCheck);
+        });
+      }
+
+      searchInput.addEventListener('input', filterHandler);
+
+      resetBtn.addEventListener('click', () => {
+        if (confirm('Reset all progress?')) {
+          checkboxes().forEach(cb => {
+            cb.checked = false;
+            cb.closest('.day-item')?.classList.remove('completed');
+            localStorage.setItem(cb.id, 'false');
+          });
+          updateProgress();
+        }
+      });
+
+      // month scroll
+      document.querySelectorAll('.footer-nav a[data-month]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const idx = link.getAttribute('data-month');
+          if (idx) {
+            const target = document.querySelector(`.month-block[data-month-index="${idx}"]`);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      loadSaved();
+      attachListeners();
+    })();
+  </script>
+</body>
+</html>
