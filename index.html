@@ -3,356 +3,598 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full Stack Developer Roadmap</title>
+  <title>200 days · full‑stack searchable roadmap</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      margin: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    .progress-container {
-      width: 100%;
-      background: #ddd;
-      border-radius: 20px;
-      margin: 20px 0;
-      height: 30px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #007acc, #00c6ff);
-      text-align: center;
-      color: white;
-      line-height: 30px;
-      font-weight: bold;
-      transition: width 0.3s ease;
-    }
-    .month {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      margin: 20px 0;
-      padding: 15px;
-    }
-    .month h2 {
-      margin-top: 0;
-      color: #007acc;
-    }
-    ul {
-      list-style: none;
+    * {
+      margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-    li {
-      margin: 8px 0;
-      padding: 8px;
-      background: #e9f5ff;
-      border-radius: 5px;
+
+    body {
+      background: linear-gradient(145deg, #eef2f7, #e0e8f0);
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.8);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      border-radius: 3rem;
+      box-shadow: 0 30px 50px -20px rgba(0,45,80,0.3);
+      padding: 2rem 2rem 3rem;
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #103556, #1d618c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       display: flex;
       align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.8rem;
     }
-    input[type="checkbox"] {
-      margin-right: 10px;
-      transform: scale(1.2);
+
+    h1 small {
+      background: #1d4e7a;
+      color: white;
+      font-size: 1.1rem;
+      padding: 0.3rem 1.5rem;
+      border-radius: 60px;
+      -webkit-text-fill-color: white;
+      font-weight: 500;
     }
-    .completed {
+
+    /* search + progress row */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      margin-bottom: 2.2rem;
+      background: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 70px;
+      box-shadow: 0 6px 14px rgba(0, 55, 100, 0.15);
+    }
+
+    .search-wrapper {
+      flex: 2;
+      min-width: 250px;
+      display: flex;
+      align-items: center;
+      background: #f0f6fe;
+      border-radius: 50px;
+      padding: 0.2rem 0.2rem 0.2rem 1.5rem;
+      border: 1px solid #bad2f0;
+    }
+
+    .search-wrapper span {
+      color: #2979b5;
+      font-size: 1.3rem;
+      margin-right: 0.3rem;
+    }
+
+    #searchInput {
+      border: none;
+      background: transparent;
+      padding: 0.9rem 0.5rem 0.9rem 0;
+      font-size: 1.1rem;
+      width: 100%;
+      outline: none;
+      color: #0b3a5a;
+    }
+
+    #searchInput::placeholder {
+      color: #7599bb;
+      font-weight: 400;
+    }
+
+    .progress-pill {
+      background: #1b3d5e;
+      color: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      white-space: nowrap;
+      box-shadow: inset 0 -2px 5px #6396c0;
+    }
+
+    .progress-pill span {
+      background: white;
+      color: #1b3d5e;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 1rem;
+    }
+
+    /* progress bar thin */
+    .progress-container {
+      width: 100%;
+      height: 18px;
+      background: #cfddee;
+      border-radius: 40px;
+      margin: 1rem 0 2.5rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0f5a9e, #2b93d6, #6dc1ff);
+      border-radius: 40px;
+      transition: width 0.25s ease;
+      box-shadow: 0 0 12px #46a6ff;
+    }
+
+    /* month grid */
+    .months-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .month-block {
+      background: white;
+      border-radius: 2.5rem;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 12px 28px -15px #1f4b77;
+      border-left: 12px solid;
+      transition: 0.2s;
+    }
+
+    .month-block:nth-child(1) { border-left-color: #0d4b7c; }
+    .month-block:nth-child(2) { border-left-color: #266b9c; }
+    .month-block:nth-child(3) { border-left-color: #3d86b5; }
+    .month-block:nth-child(4) { border-left-color: #549fcc; }
+    .month-block:nth-child(5) { border-left-color: #72b4de; }
+    .month-block:nth-child(6) { border-left-color: #97c9ed; }
+
+    .month-header {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .month-header h2 {
+      font-size: 2rem;
+      font-weight: 650;
+      color: #113753;
+    }
+
+    .month-tag {
+      background: #deecfb;
+      border-radius: 60px;
+      padding: 0.4rem 1.3rem;
+      font-weight: 600;
+      color: #1a577b;
+    }
+
+    .day-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .day-item {
+      display: flex;
+      align-items: center;
+      background: #f5faff;
+      border-radius: 60px;
+      padding: 0.4rem 1rem 0.4rem 0.7rem;
+      border: 1px solid transparent;
+      transition: 0.15s;
+      font-size: 1.02rem;
+    }
+
+    .day-item:hover {
+      background: #e3f0ff;
+      border-color: #aecfef;
+      transform: translateX(5px);
+    }
+
+    .day-item input[type="checkbox"] {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border: 2.5px solid #1b6aa5;
+      border-radius: 8px;
+      margin-right: 15px;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .day-item input[type="checkbox"]:checked {
+      background: #1b6aa5;
+      border-color: #1b6aa5;
+    }
+
+    .day-item input[type="checkbox"]:checked::after {
+      content: "✓";
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .day-item a {
+      color: #12406b;
+      text-decoration: none;
+      font-weight: 500;
+      flex: 1;
+      padding: 6px 0;
+    }
+
+    .day-item a:hover {
+      text-decoration: underline;
+      color: #0066b3;
+    }
+
+    .day-item.completed a {
       text-decoration: line-through;
-      color: gray;
+      color: #8fafcc;
+    }
+
+    .topic-badge {
+      margin-left: 10px;
+      background: #e2eaf3;
+      border-radius: 30px;
+      padding: 0.2rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1b5782;
+      border: 1px solid #b9d6f2;
+      white-space: nowrap;
+    }
+
+    .topic-badge.hint {
+      background: #cee6ff;
+    }
+
+    /* no result message */
+    .no-result {
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: 60px;
+      color: #1f5170;
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+
+    .footer-nav {
+      margin-top: 3.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1.5rem 1rem 0;
+      border-top: 2px dashed #b8cee9;
+    }
+
+    .footer-nav a {
+      background: #d2e6ff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      color: #104c78;
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover {
+      background: #2779b3;
+      color: white;
+    }
+
+    .reset-btn {
+      background: #234e72;
+      color: white;
+      border: none;
+      padding: 0.5rem 2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>6-Month Full Stack Developer Roadmap (200 Days)</h1>
+<div class="container">
+  <h1>🗓️ 200 day full‑stack roadmap <small>days 1 → 200</small></h1>
 
-  <!-- Progress Bar -->
-  <div class="progress-container">
-    <div class="progress-bar" id="progress-bar">0%</div>
+  <!-- search & progress summary -->
+  <div class="toolbar">
+    <div class="search-wrapper">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Search topics (e.g. react, mongodb, jwt, docker)" autocomplete="off">
+    </div>
+    <div class="progress-pill">
+      ✅ <span id="checkedCount">0</span> / 200 done
+    </div>
+    <button class="reset-btn" id="resetProgress">reset</button>
   </div>
 
- <!-- Month 1 -->
-<div class="month">
-  <h2>Month 1 – Foundations (Days 1–30)</h2>
-  <ul>
-    <li><input type="checkbox" id="day1" title="Day 1: Learn basic HTML structure"> Day 1: Learn basic HTML structure</li>
-    <li><input type="checkbox" id="day2" title="Day 2: Practice headings, paragraphs, lists"> Day 2: Practice headings, paragraphs, lists</li>
-    <li><input type="checkbox" id="day3" title="Day 3: Build a simple HTML page"> Day 3: Build a simple HTML page</li>
-    <li><input type="checkbox" id="day4" title="Day 4: Learn forms & inputs"> Day 4: Learn forms & inputs</li>
-    <li><input type="checkbox" id="day5" title="Day 5: Semantic HTML tags"> Day 5: Semantic HTML tags</li>
-    <li><input type="checkbox" id="day6" title="Day 6: CSS selectors"> Day 6: CSS selectors</li>
-    <li><input type="checkbox" id="day7" title="Day 7: Flexbox basics"> Day 7: Flexbox basics</li>
-    <li><input type="checkbox" id="day8" title="Day 8: CSS Grid basics"> Day 8: CSS Grid basics</li>
-    <li><input type="checkbox" id="day9" title="Day 9: Responsive design"> Day 9: Responsive design</li>
-    <li><input type="checkbox" id="day10" title="Day 10: Mini project – static portfolio"> Day 10: Mini project – static portfolio</li>
-    <li><input type="checkbox" id="day11" title="Day 11: JavaScript variables"> Day 11: JavaScript variables</li>
-    <li><input type="checkbox" id="day12" title="Day 12: Functions"> Day 12: Functions</li>
-    <li><input type="checkbox" id="day13" title="Day 13: Conditionals"> Day 13: Conditionals</li>
-    <li><input type="checkbox" id="day14" title="Day 14: Loops"> Day 14: Loops</li>
-    <li><input type="checkbox" id="day15" title="Day 15: Arrays"> Day 15: Arrays</li>
-    <li><input type="checkbox" id="day16" title="Day 16: Objects"> Day 16: Objects</li>
-    <li><input type="checkbox" id="day17" title="Day 17: DOM basics"> Day 17: DOM basics</li>
-    <li><input type="checkbox" id="day18" title="Day 18: Event listeners"> Day 18: Event listeners</li>
-    <li><input type="checkbox" id="day19" title="Day 19: DOM manipulation"> Day 19: DOM manipulation</li>
-    <li><input type="checkbox" id="day20" title="Day 20: Build interactive form"> Day 20: Build interactive form</li>
-    <li><input type="checkbox" id="day21" title="Day 21: Practice JS functions"> Day 21: Practice JS functions</li>
-    <li><input type="checkbox" id="day22" title="Day 22: Practice DOM events"> Day 22: Practice DOM events</li>
-    <li><input type="checkbox" id="day23" title="Day 23: Practice CSS animations"> Day 23: Practice CSS animations</li>
-    <li><input type="checkbox" id="day24" title="Day 24: Combine HTML/CSS/JS"> Day 24: Combine HTML/CSS/JS</li>
-    <li><input type="checkbox" id="day25" title="Day 25: Debugging basics"> Day 25: Debugging basics</li>
-    <li><input type="checkbox" id="day26" title="Day 26: Mini project – interactive quiz"> Day 26: Mini project – interactive quiz</li>
-    <li><input type="checkbox" id="day27" title="Day 27: Review HTML/CSS"> Day 27: Review HTML/CSS</li>
-    <li><input type="checkbox" id="day28" title="Day 28: Review JavaScript basics"> Day 28: Review JavaScript basics</li>
-    <li><input type="checkbox" id="day29" title="Day 29: Practice project polish"> Day 29: Practice project polish</li>
-    <li><input type="checkbox" id="day30" title="Day 30: Finalize Month 1 portfolio"> Day 30: Finalize Month 1 portfolio</li>
-  </ul>
+  <!-- main progress bar -->
+  <div class="progress-container">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- months container injected via js (200 days) -->
+  <div id="monthsContainer" class="months-wrapper"></div>
+
+  <!-- footer nav -->
+  <div class="footer-nav">
+    <a href="#" data-month="0">month 1</a>
+    <a href="#" data-month="1">month 2</a>
+    <a href="#" data-month="2">month 3</a>
+    <a href="#" data-month="3">month 4</a>
+    <a href="#" data-month="4">month 5</a>
+    <a href="#" data-month="5">month 6</a>
+    <a href="#">⬆ top</a>
+  </div>
 </div>
 
-<!-- Month 2 -->
-<div class="month">
-  <h2>Month 2 – Frontend (Days 31–60)</h2>
-  <ul>
-    <li><input type="checkbox" id="day31" title="Day 31: Learn ES6 arrow functions"> Day 31: Learn ES6 arrow functions</li>
-    <li><input type="checkbox" id="day32" title="Day 32: Practice promises"> Day 32: Practice promises</li>
-    <li><input type="checkbox" id="day33" title="Day 33: Async/await exercises"> Day 33: Async/await exercises</li>
-    <li><input type="checkbox" id="day34" title="Day 34: ES6 modules (import/export)"> Day 34: ES6 modules (import/export)</li>
-    <li><input type="checkbox" id="day35" title="Day 35: Fetch API basics"> Day 35: Fetch API basics</li>
-    <li><input type="checkbox" id="day36" title="Day 36: Fetch API with JSON"> Day 36: Fetch API with JSON</li>
-    <li><input type="checkbox" id="day37" title="Day 37: Error handling in fetch"> Day 37: Error handling in fetch</li>
-    <li><input type="checkbox" id="day38" title="Day 38: Build mini API project"> Day 38: Build mini API project</li>
-    <li><input type="checkbox" id="day39" title="Day 39: Intro to React – setup"> Day 39: Intro to React – setup</li>
-    <li><input type="checkbox" id="day40" title="Day 40: React components"> Day 40: React components</li>
-    <li><input type="checkbox" id="day41" title="Day 41: Props in React"> Day 41: Props in React</li>
-    <li><input type="checkbox" id="day42" title="Day 42: State in React"> Day 42: State in React</li>
-    <li><input type="checkbox" id="day43" title="Day 43: React events"> Day 43: React events</li>
-    <li><input type="checkbox" id="day44" title="Day 44: React forms"> Day 44: React forms</li>
-    <li><input type="checkbox" id="day45" title="Day 45: React hooks (useState)"> Day 45: React hooks (useState)</li>
-    <li><input type="checkbox" id="day46" title="Day 46: React hooks (useEffect)"> Day 46: React hooks (useEffect)</li>
-    <li><input type="checkbox" id="day47" title="Day 47: React project setup"> Day 47: React project setup</li>
-    <li><input type="checkbox" id="day48" title="Day 48: Build To‑Do app – add tasks"> Day 48: Build To‑Do app – add tasks</li>
-    <li><input type="checkbox" id="day49" title="Day 49: Build To‑Do app – delete tasks"> Day 49: Build To‑Do app – delete tasks</li>
-    <li><input type="checkbox" id="day50" title="Day 50: Build To‑Do app – edit tasks"> Day 50: Build To‑Do app – edit tasks</li>
-    <li><input type="checkbox" id="day51" title="Day 51: Add styling to To‑Do app"> Day 51: Add styling to To‑Do app</li>
-    <li><input type="checkbox" id="day52" title="Day 52: Add local storage to To‑Do app"> Day 52: Add local storage to To‑Do app</li>
-    <li><input type="checkbox" id="day53" title="Day 53: Add filtering to To‑Do app"> Day 53: Add filtering to To‑Do app</li>
-    <li><input type="checkbox" id="day54" title="Day 54: Debug React app"> Day 54: Debug React app</li>
-    <li><input type="checkbox" id="day55" title="Day 55: Review React basics"> Day 55: Review React basics</li>
-    <li><input type="checkbox" id="day56" title="Day 56: Practice React hooks"> Day 56: Practice React hooks</li>
-    <li><input type="checkbox" id="day57" title="Day 57: Practice API integration in React"> Day 57: Practice API integration in React</li>
-    <li><input type="checkbox" id="day58" title="Day 58: Polish To‑Do app project"> Day 58: Polish To‑Do app project</li>
-    <li><input type="checkbox" id="day59" title="Day 59: Add extra features (dark mode)"> Day 59: Add extra features (dark mode)</li>
-    <li><input type="checkbox" id="day60" title="Day 60: Finalize Month 2 React project"> Day 60: Finalize Month 2 React project</li>
-  </ul>
-</div>
-	
-<!-- Month 3 -->
-<div class="month">
-  <h2>Month 3 – Backend (Days 61–90)</h2>
-  <ul>
-    <li><input type="checkbox" id="day61" title="Day 61: Learn Node.js basics – setup & modules"> Day 61: Learn Node.js basics – setup & modules</li>
-    <li><input type="checkbox" id="day62" title="Day 62: Understand npm & package.json"> Day 62: Understand npm & package.json</li>
-    <li><input type="checkbox" id="day63" title="Day 63: Learn Node.js event loop"> Day 63: Learn Node.js event loop</li>
-    <li><input type="checkbox" id="day64" title="Day 64: Practice Node.js file system module"> Day 64: Practice Node.js file system module</li>
-    <li><input type="checkbox" id="day65" title="Day 65: Build a simple Node.js script"> Day 65: Build a simple Node.js script</li>
-    <li><input type="checkbox" id="day66" title="Day 66: Intro to Express.js – setup"> Day 66: Intro to Express.js – setup</li>
-    <li><input type="checkbox" id="day67" title="Day 67: Express routing basics"> Day 67: Express routing basics</li>
-    <li><input type="checkbox" id="day68" title="Day 68: Express middleware"> Day 68: Express middleware</li>
-    <li><input type="checkbox" id="day69" title="Day 69: REST API basics with Express"> Day 69: REST API basics with Express</li>
-    <li><input type="checkbox" id="day70" title="Day 70: Build a simple REST API"> Day 70: Build a simple REST API</li>
-    <li><input type="checkbox" id="day71" title="Day 71: Handle GET requests"> Day 71: Handle GET requests</li>
-    <li><input type="checkbox" id="day72" title="Day 72: Handle POST requests"> Day 72: Handle POST requests</li>
-    <li><input type="checkbox" id="day73" title="Day 73: Handle PUT requests"> Day 73: Handle PUT requests</li>
-    <li><input type="checkbox" id="day74" title="Day 74: Handle DELETE requests"> Day 74: Handle DELETE requests</li>
-    <li><input type="checkbox" id="day75" title="Day 75: Practice REST API with JSON data"> Day 75: Practice REST API with JSON data</li>
-    <li><input type="checkbox" id="day76" title="Day 76: Connect React frontend to Express API"> Day 76: Connect React frontend to Express API</li>
-    <li><input type="checkbox" id="day77" title="Day 77: Fetch data from backend in React"> Day 77: Fetch data from backend in React</li>
-    <li><input type="checkbox" id="day78" title="Day 78: Handle API errors in React"> Day 78: Handle API errors in React</li>
-    <li><input type="checkbox" id="day79" title="Day 79: Build full CRUD with React + Express"> Day 79: Build full CRUD with React + Express</li>
-    <li><input type="checkbox" id="day80" title="Day 80: Debug backend API"> Day 80: Debug backend API</li>
-    <li><input type="checkbox" id="day81" title="Day 81: Add validation to API"> Day 81: Add validation to API</li>
-    <li><input type="checkbox" id="day82" title="Day 82: Add logging middleware"> Day 82: Add logging middleware</li>
-    <li><input type="checkbox" id="day83" title="Day 83: Add error handling middleware"> Day 83: Add error handling middleware</li>
-    <li><input type="checkbox" id="day84" title="Day 84: Secure API basics"> Day 84: Secure API basics</li>
-    <li><input type="checkbox" id="day85" title="Day 85: Practice REST API best practices"> Day 85: Practice REST API best practices</li>
-    <li><input type="checkbox" id="day86" title="Day 86: Mini project – Notes API"> Day 86: Mini project – Notes API</li>
-    <li><input type="checkbox" id="day87" title="Day 87: Connect Notes API to React frontend"> Day 87: Connect Notes API to React frontend</li>
-    <li><input type="checkbox" id="day88" title="Day 88: Add extra features to Notes app"> Day 88: Add extra features to Notes app</li>
-    <li><input type="checkbox" id="day89" title="Day 89: Review Node.js & Express"> Day 89: Review Node.js & Express</li>
-    <li><input type="checkbox" id="day90" title="Day 90: Finalize backend project"> Day 90: Finalize backend project</li>
-  </ul>
-</div>
+<script>
+  (function() {
+    // ---------- generate exactly 200 days (1..200) with topics ----------
+    const monthNames = [
+      "Month 1 – HTML/CSS/JS foundations (days 1–30)",
+      "Month 2 – Frontend / React (days 31–60)",
+      "Month 3 – Backend Node.js / Express (days 61–90)",
+      "Month 4 – Databases (SQL + MongoDB) (days 91–120)",
+      "Month 5 – Integration & Deployment (days 121–150)",
+      "Month 6 – Advanced + Capstone (days 151–200)"
+    ];
 
-<!-- Month 4 -->
-<div class="month">
-  <h2>Month 4 – Databases (Days 91–120)</h2>
-  <ul>
-    <li><input type="checkbox" id="day91" title="Day 91: Learn SQL basics – tables"> Day 91: Learn SQL basics – tables</li>
-    <li><input type="checkbox" id="day92" title="Day 92: SQL queries – SELECT"> Day 92: SQL queries – SELECT</li>
-    <li><input type="checkbox" id="day93" title="Day 93: SQL queries – INSERT"> Day 93: SQL queries – INSERT</li>
-    <li><input type="checkbox" id="day94" title="Day 94: SQL queries – UPDATE"> Day 94: SQL queries – UPDATE</li>
-    <li><input type="checkbox" id="day95" title="Day 95: SQL queries – DELETE"> Day 95: SQL queries – DELETE</li>
-    <li><input type="checkbox" id="day96" title="Day 96: SQL joins"> Day 96: SQL joins</li>
-    <li><input type="checkbox" id="day97" title="Day 97: SQL constraints"> Day 97: SQL constraints</li>
-    <li><input type="checkbox" id="day98" title="Day 98: SQL practice project"> Day 98: SQL practice project</li>
-    <li><input type="checkbox" id="day99" title="Day 99: Intro to MongoDB – setup"> Day 99: Intro to MongoDB – setup</li>
-    <li><input type="checkbox" id="day100" title="Day 100: MongoDB collections & documents"> Day 100: MongoDB collections & documents</li>
-    <li><input type="checkbox" id="day101" title="Day 101: MongoDB CRUD – insert"> Day 101: MongoDB CRUD – insert</li>
-    <li><input type="checkbox" id="day102" title="Day 102: MongoDB CRUD – find"> Day 102: MongoDB CRUD – find</li>
-    <li><input type="checkbox" id="day103" title="Day 103: MongoDB CRUD – update"> Day 103: MongoDB CRUD – update</li>
-    <li><input type="checkbox" id="day104" title="Day 104: MongoDB CRUD – delete"> Day 104: MongoDB CRUD – delete</li>
-    <li><input type="checkbox" id="day105" title="Day 105: MongoDB queries"> Day 105: MongoDB queries</li>
-    <li><input type="checkbox" id="day106" title="Day 106: MongoDB indexes"> Day 106: MongoDB indexes</li>
-    <li><input type="checkbox" id="day107" title="Day 107: Connect MongoDB to Express"> Day 107: Connect MongoDB to Express</li>
-    <li><input type="checkbox" id="day108" title="Day 108: Build user signup API"> Day 108: Build user signup API</li>
-    <li><input type="checkbox" id="day109" title="Day 109: Build user login API"> Day 109: Build user login API</li>
-    <li><input type="checkbox" id="day110" title="Day 110: Add password hashing"> Day 110: Add password hashing</li>
-    <li><input type="checkbox" id="day111" title="Day 111: Add JWT authentication"> Day 111: Add JWT authentication</li>
-    <li><input type="checkbox" id="day112" title="Day 112: Add session management"> Day 112: Add session management</li>
-    <li><input type="checkbox" id="day113" title="Day 113: Secure MongoDB queries"> Day 113: Secure MongoDB queries</li>
-    <li><input type="checkbox" id="day114" title="Day 114: Debug database integration"> Day 114: Debug database integration</li>
-    <li><input type="checkbox" id="day115" title="Day 115: Practice SQL + MongoDB"> Day 115: Practice SQL + MongoDB</li>
-    <li><input type="checkbox" id="day116" title="Day 116: Mini project – Auth system"> Day 116: Mini project – Auth system</li>
-    <li><input type="checkbox" id="day117" title="Day 117: Connect Auth system to React frontend"> Day 117: Connect Auth system to React frontend</li>
-    <li><input type="checkbox" id="day118" title="Day 118: Add extra features (profile page)"> Day 118: Add extra features (profile page)</li>
-    <li><input type="checkbox" id="day119" title="Day 119: Review databases"> Day 119: Review databases</li>
-    <li><input type="checkbox" id="day120" title="Day 120: Finalize database project"> Day 120: Finalize database project</li>
-  </ul>
-</div>
+    // specific day titles (based on original but extended to 200)
+    // I'll build an array dayTopics[1..200] (index 1-based)
+    const dayTopics = {
+      1: "Learn basic HTML structure", 2: "Practice headings, paragraphs, lists", 3: "Build a simple HTML page",
+      4: "Learn forms & inputs", 5: "Semantic HTML tags", 6: "CSS selectors", 7: "Flexbox basics", 8: "CSS Grid basics",
+      9: "Responsive design", 10: "Mini project – static portfolio", 11: "JavaScript variables", 12: "Functions",
+      13: "Conditionals", 14: "Loops", 15: "Arrays", 16: "Objects", 17: "DOM basics", 18: "Event listeners",
+      19: "DOM manipulation", 20: "Build interactive form", 21: "Practice JS functions", 22: "Practice DOM events",
+      23: "Practice CSS animations", 24: "Combine HTML/CSS/JS", 25: "Debugging basics", 26: "Mini project – interactive quiz",
+      27: "Review HTML/CSS", 28: "Review JavaScript basics", 29: "Practice project polish", 30: "Finalize Month 1 portfolio",
 
-<!-- Month 5 -->
-<div class="month">
-  <h2>Month 5 – Integration & Deployment (Days 121–150)</h2>
-  <ul>
-    <li><input type="checkbox" id="day121" title="Day 121: Learn JWT basics"> Day 121: Learn JWT basics</li>
-    <li><input type="checkbox" id="day122" title="Day 122: Implement JWT authentication"> Day 122: Implement JWT authentication</li>
-    <li><input type="checkbox" id="day123" title="Day 123: Learn session management"> Day 123: Learn session management</li>
-    <li><input type="checkbox" id="day124" title="Day 124: Add sessions to backend"> Day 124: Add sessions to backend</li>
-    <li><input type="checkbox" id="day125" title="Day 125: Secure API endpoints"> Day 125: Secure API endpoints</li>
-    <li><input type="checkbox" id="day126" title="Day 126: Learn RESTful API design principles"> Day 126: Learn RESTful API design principles</li>
-    <li><input type="checkbox" id="day127" title="Day 127: Add error handling to API"> Day 127: Add error handling to API</li>
-    <li><input type="checkbox" id="day128" title="Day 128: Add input validation"> Day 128: Add input validation</li>
-    <li><input type="checkbox" id="day129" title="Day 129: Learn API versioning"> Day 129: Learn API versioning</li>
-    <li><input type="checkbox" id="day130" title="Day 130: Practice RESTful API best practices"> Day 130: Practice RESTful API best practices</li>
-    <li><input type="checkbox" id="day131" title="Day 131: Intro to deployment – Heroku"> Day 131: Intro to deployment – Heroku</li>
-    <li><input type="checkbox" id="day132" title="Day 132: Deploy backend to Heroku"> Day 132: Deploy backend to Heroku</li>
-    <li><input type="checkbox" id="day133" title="Day 133: Deploy frontend to Netlify"> Day 133: Deploy frontend to Netlify</li>
-    <li><input type="checkbox" id="day134" title="Day 134: Deploy full stack app"> Day 134: Deploy full stack app</li>
-    <li><input type="checkbox" id="day135" title="Day 135: Learn environment variables"> Day 135: Learn environment variables</li>
-    <li><input type="checkbox" id="day136" title="Day 136: Add environment variables to project"> Day 136: Add environment variables to project</li>
-    <li><input type="checkbox" id="day137" title="Day 137: Learn CI/CD basics"> Day 137: Learn CI/CD basics</li>
-    <li><input type="checkbox" id="day138" title="Day 138: Practice CI/CD pipeline setup"> Day 138: Practice CI/CD pipeline setup</li>
-    <li><input type="checkbox" id="day139" title="Day 139: Debug deployment issues"> Day 139: Debug deployment issues</li>
-    <li><input type="checkbox" id="day140" title="Day 140: Review deployment methods"> Day 140: Review deployment methods</li>
-    <li><input type="checkbox" id="day141" title="Day 141: Learn Vercel basics"> Day 141: Learn Vercel basics</li>
-    <li><input type="checkbox" id="day142" title="Day 142: Deploy React app to Vercel"> Day 142: Deploy React app to Vercel</li>
-    <li><input type="checkbox" id="day143" title="Day 143: Learn Netlify basics"> Day 143: Learn Netlify basics</li>
-    <li><input type="checkbox" id="day144" title="Day 144: Deploy static site to Netlify"> Day 144: Deploy static site to Netlify</li>
-    <li><input type="checkbox" id="day145" title="Day 145: Learn Heroku database integration"> Day 145: Learn Heroku database integration</li>
-    <li><input type="checkbox" id="day146" title="Day 146: Connect MongoDB Atlas to Heroku"> Day 146: Connect MongoDB Atlas to Heroku</li>
-    <li><input type="checkbox" id="day147" title="Day 147: Secure deployment with HTTPS"> Day 147: Secure deployment with HTTPS</li>
-    <li><input type="checkbox" id="day148" title="Day 148: Add monitoring tools"> Day 148: Add monitoring tools</li>
-    <li><input type="checkbox" id="day149" title="Day 149: Finalize deployment project"> Day 149: Finalize deployment project</li>
-    <li><input type="checkbox" id="day150" title="Day 150: Review Month 5 integration & deployment"> Day 150: Review Month 5 integration & deployment</li>
-  </ul>
-</div>
+      31: "Learn ES6 arrow functions", 32: "Practice promises", 33: "Async/await exercises", 34: "ES6 modules (import/export)",
+      35: "Fetch API basics", 36: "Fetch API with JSON", 37: "Error handling in fetch", 38: "Build mini API project",
+      39: "Intro to React – setup", 40: "React components", 41: "Props in React", 42: "State in React", 43: "React events",
+      44: "React forms", 45: "React hooks (useState)", 46: "React hooks (useEffect)", 47: "React project setup",
+      48: "Build To‑Do app – add tasks", 49: "Build To‑Do app – delete tasks", 50: "Build To‑Do app – edit tasks",
+      51: "Add styling to To‑Do app", 52: "Add local storage to To‑Do app", 53: "Add filtering to To‑Do app",
+      54: "Debug React app", 55: "Review React basics", 56: "Practice React hooks", 57: "Practice API integration in React",
+      58: "Polish To‑Do app project", 59: "Add extra features (dark mode)", 60: "Finalize Month 2 React project",
 
-<!-- Month 6 -->
-<div class="month">
-  <h2>Month 6 – Advanced & Capstone (Days 151–200)</h2>
-  <ul>
-    <li><input type="checkbox" id="day151" title="Day 151: Learn Git basics"> Day 151: Learn Git basics</li>
-    <li><input type="checkbox" id="day152" title="Day 152: Practice Git branches"> Day 152: Practice Git branches</li>
-    <li><input type="checkbox" id="day153" title="Day 153: Practice Git merges"> Day 153: Practice Git merges</li>
-    <li><input type="checkbox" id="day154" title="Day 154: Learn GitHub pull requests"> Day 154: Learn GitHub pull requests</li>
-    <li><input type="checkbox" id="day155" title="Day 155: Practice GitHub workflows"> Day 155: Practice GitHub workflows</li>
-    <li><input type="checkbox" id="day156" title="Day 156: Learn TypeScript basics"> Day 156: Learn TypeScript basics</li>
-    <li><input type="checkbox" id="day157" title="Day 157: Practice TypeScript types"> Day 157: Practice TypeScript types</li>
-    <li><input type="checkbox" id="day158" title="Day 158: Learn TypeScript interfaces"> Day 158: Learn TypeScript interfaces</li>
-    <li><input type="checkbox" id="day159" title="Day 159: Practice TypeScript classes"> Day 159: Practice TypeScript classes</li>
-    <li><input type="checkbox" id="day160" title="Day 160: Convert small JS project to TypeScript"> Day 160: Convert small JS project to TypeScript</li>
-    <li><input type="checkbox" id="day161" title="Day 161: Learn Next.js basics"> Day 161: Learn Next.js basics</li>
-    <li><input type="checkbox" id="day162" title="Day 162: Practice Next.js pages"> Day 162: Practice Next.js pages</li>
-    <li><input type="checkbox" id="day163" title="Day 163: Practice Next.js routing"> Day 163: Practice Next.js routing</li>
-    <li><input type="checkbox" id="day164" title="Day 164: Learn Next.js API routes"> Day 164: Learn Next.js API routes</li>
-    <li><input type="checkbox" id="day165" title="Day 165: Build mini Next.js project"> Day 165: Build mini Next.js project</li>
-    <li><input type="checkbox" id="day166" title="Day 166: Learn React Router basics"> Day 166: Learn React Router basics</li>
-    <li><input type="checkbox" id="day167" title="Day 167: Practice nested routes"> Day 167: Practice nested routes</li>
-    <li><input type="checkbox" id="day168" title="Day 168: Practice protected routes"> Day 168: Practice protected routes</li>
-    <li><input type="checkbox" id="day169" title="Day 169: Build routing project"> Day 169: Build routing project</li>
-    <li><input type="checkbox" id="day170" title="Day 170: Review advanced frontend"> Day 170: Review advanced frontend</li>
-    <li><input type="checkbox" id="day171" title="Day 171: Learn Docker basics"> Day 171: Learn Docker basics</li>
-    <li><input type="checkbox" id="day172" title="Day 172: Practice Docker images"> Day 172: Practice Docker images</li>
-    <li><input type="checkbox" id="day173" title="Day 173: Practice Docker containers"> Day 173: Practice Docker containers</li>
-    <li><input type="checkbox" id="day174" title="Day 174: Learn Docker Compose"> Day 174: Learn Docker Compose</li>
-    <li><input type="checkbox" id="day175" title="Day 175: Containerize a Node.js app"> Day 175: Containerize a Node.js app</li>
-    <li><input type="checkbox" id="day176" title="Day 176: Containerize a React app"> Day 176: Containerize a React app</li>
-    <li><input type="checkbox" id="day177" title="Day 177: Connect containers with Docker Compose"> Day 177: Connect containers with Docker Compose</li>
-    <li><input type="checkbox" id="day178" title="Day 178: Debug Docker setup"> Day 178: Debug Docker setup</li>
-    <li><input type="checkbox" id="day179" title="Day 179: Review Docker basics"> Day 179: Review Docker basics</li>
-    <li><input type="checkbox" id="day180" title="Day 180: Finalize Docker project"> Day 180: Finalize Docker project</li>
-    <li><input type="checkbox" id="day181" title="Day 181: Plan capstone project"> Day 181: Plan capstone project</li>
-    <li><input type="checkbox" id="day182" title="Day 182: Set up project repo"> Day 182: Set up project repo</li>
-    <li><input type="checkbox" id="day183" title="Day 183: Build project frontend"> Day 183: Build project frontend</li>
-    <li><input type="checkbox" id="day184" title="Day 184: Build project backend"> Day 184: Build project backend</li>
-    <li><input type="checkbox" id="day185" title="Day 185: Connect frontend & backend"> Day 185: Connect frontend & backend</li>
-    <li><input type="checkbox" id="day186" title="Day 186: Add database integration"> Day 186: Add database integration</li>
-    <li><input type="checkbox" id="day187" title="Day 187: Add authentication system"> Day 187: Add authentication system</li>
-    <li><input type="checkbox" id="day188" title="Day 188: Add advanced features"> Day 188: Add advanced features</li>
-    <li><input type="checkbox" id="day189" title="Day 189: Add deployment setup"> Day 189: Add deployment setup</li>
-    <li><input type="checkbox" id="day190" title="Day 190: Debug capstone project"> Day 190: Debug capstone project</li>
-    <li><input type="checkbox" id="day191" title="Day 191: Polish frontend"> Day 191: Polish frontend</li>
-    <li><input type="checkbox" id="day192" title="Day 192: Polish backend"> Day 192: Polish backend</li>
-    <li><input type="checkbox" id="day193" title="Day 193: Polish database"> Day 193: Polish database</li>
-    <li><input type="checkbox" id="day194" title="Day 194: Polish authentication"> Day 194: Polish authentication</li>
-    <li><input type="checkbox" id="day195" title="Day 195: Polish deployment"> Day 195: Polish deployment</li>
-    <li><input type="checkbox" id="day196" title="Day 196: Add documentation"> Day 196: Add documentation</li>
-    <li><input type="checkbox" id="day197" title="Day 197: Write README & setup guide"> Day 197: Write README & setup guide</li>
-    <li><input type="checkbox" id="day198" title="Day 198: Prepare project presentation"> Day 198: Prepare project presentation</li>
-    <li><input type="checkbox" id="day199" title="Day 199: Final testing & bug fixes"> Day 199: Final testing & bug fixes</li>
-    <li><input type="checkbox" id="day200" title="Day 200: Showcase capstone project in portfolio"> Day 200: Showcase capstone project in portfolio</li>
-  </ul>
-</div>
+      61: "Learn Node.js basics – setup & modules", 62: "Understand npm & package.json", 63: "Learn Node.js event loop",
+      64: "Practice Node.js file system module", 65: "Build a simple Node.js script", 66: "Intro to Express.js – setup",
+      67: "Express routing basics", 68: "Express middleware", 69: "REST API basics with Express", 70: "Build a simple REST API",
+      71: "Handle GET requests", 72: "Handle POST requests", 73: "Handle PUT requests", 74: "Handle DELETE requests",
+      75: "Practice REST API with JSON data", 76: "Connect React frontend to Express API", 77: "Fetch data from backend in React",
+      78: "Handle API errors in React", 79: "Build full CRUD with React + Express", 80: "Debug backend API",
+      81: "Add validation to API", 82: "Add logging middleware", 83: "Add error handling middleware", 84: "Secure API basics",
+      85: "Practice REST API best practices", 86: "Mini project – Notes API", 87: "Connect Notes API to React frontend",
+      88: "Add extra features to Notes app", 89: "Review Node.js & Express", 90: "Finalize backend project",
 
+      91: "Learn SQL basics – tables", 92: "SQL queries – SELECT", 93: "SQL queries – INSERT", 94: "SQL queries – UPDATE",
+      95: "SQL queries – DELETE", 96: "SQL joins", 97: "SQL constraints", 98: "SQL practice project",
+      99: "Intro to MongoDB – setup", 100: "MongoDB collections & documents", 101: "MongoDB CRUD – insert",
+      102: "MongoDB CRUD – find", 103: "MongoDB CRUD – update", 104: "MongoDB CRUD – delete", 105: "MongoDB queries",
+      106: "MongoDB indexes", 107: "Connect MongoDB to Express", 108: "Build user signup API", 109: "Build user login API",
+      110: "Add password hashing", 111: "Add JWT authentication", 112: "Add session management", 113: "Secure MongoDB queries",
+      114: "Debug database integration", 115: "Practice SQL + MongoDB", 116: "Mini project – Auth system",
+      117: "Connect Auth system to React frontend", 118: "Add extra features (profile page)", 119: "Review databases",
+      120: "Finalize database project",
 
-  <script>
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const progressBar = document.getElementById('progress-bar');
+      121: "Learn JWT basics", 122: "Implement JWT authentication", 123: "Learn session management", 124: "Add sessions to backend",
+      125: "Secure API endpoints", 126: "Learn RESTful API design principles", 127: "Add error handling to API",
+      128: "Add input validation", 129: "Learn API versioning", 130: "Practice RESTful API best practices",
+      131: "Intro to deployment – Heroku", 132: "Deploy backend to Heroku", 133: "Deploy frontend to Netlify",
+      134: "Deploy full stack app", 135: "Learn environment variables", 136: "Add environment variables to project",
+      137: "Learn CI/CD basics", 138: "Practice CI/CD pipeline setup", 139: "Debug deployment issues", 140: "Review deployment methods",
+      141: "Learn Vercel basics", 142: "Deploy React app to Vercel", 143: "Learn Netlify basics", 144: "Deploy static site to Netlify",
+      145: "Learn Heroku database integration", 146: "Connect MongoDB Atlas to Heroku", 147: "Secure deployment with HTTPS",
+      148: "Add monitoring tools", 149: "Finalize deployment project", 150: "Review Month 5 integration & deployment",
 
-    // Load saved progress from localStorage
-    checkboxes.forEach(box => {
-      const saved = localStorage.getItem(box.id);
-      if (saved === "true") {
-        box.checked = true;
-        box.parentElement.classList.add('completed');
+      151: "Learn Git basics", 152: "Practice Git branches", 153: "Practice Git merges", 154: "Learn GitHub pull requests",
+      155: "Practice GitHub workflows", 156: "Learn TypeScript basics", 157: "Practice TypeScript types", 158: "Learn TypeScript interfaces",
+      159: "Practice TypeScript classes", 160: "Convert small JS project to TypeScript", 161: "Learn Next.js basics",
+      162: "Practice Next.js pages", 163: "Practice Next.js routing", 164: "Learn Next.js API routes", 165: "Build mini Next.js project",
+      166: "Learn React Router basics", 167: "Practice nested routes", 168: "Practice protected routes", 169: "Build routing project",
+      170: "Review advanced frontend", 171: "Learn Docker basics", 172: "Practice Docker images", 173: "Practice Docker containers",
+      174: "Learn Docker Compose", 175: "Containerize a Node.js app", 176: "Containerize a React app", 177: "Connect containers with Docker Compose",
+      178: "Debug Docker setup", 179: "Review Docker basics", 180: "Finalize Docker project", 181: "Plan capstone project",
+      182: "Set up project repo", 183: "Build project frontend", 184: "Build project backend", 185: "Connect frontend & backend",
+      186: "Add database integration", 187: "Add authentication system", 188: "Add advanced features", 189: "Add deployment setup",
+      190: "Debug capstone project", 191: "Polish frontend", 192: "Polish backend", 193: "Polish database", 194: "Polish authentication",
+      195: "Polish deployment", 196: "Add documentation", 197: "Write README & setup guide", 198: "Prepare project presentation",
+      199: "Final testing & bug fixes", 200: "Showcase capstone project in portfolio"
+    };
+
+    // create month blocks
+    const monthsContainer = document.getElementById('monthsContainer');
+    function renderAllDays() {
+      let html = '';
+      for (let m = 0; m < 6; m++) {
+        const start = m * 30 + 1;  // month1:1, month2:31, month3:61, month4:91, month5:121, month6:151
+        const end = start + 29;
+        html += `<div class="month-block" data-month-index="${m}">`;
+        html += `<div class="month-header"><h2>${monthNames[m]}</h2><span class="month-tag">days ${start}–${end}</span></div>`;
+        html += `<div class="day-list" id="month-${m}">`;
+
+        for (let d = start; d <= end; d++) {
+          const title = dayTopics[d] || `Day ${d}: advanced practice (project)`;
+          // generate a hint badge based on keywords
+          let badge = '📌 topic';
+          if (title.includes('React') || title.includes('component')) badge = '⚛️ react';
+          else if (title.includes('SQL')) badge = '🗃️ sql';
+          else if (title.includes('Mongo')) badge = '🍃 mongo';
+          else if (title.includes('API') || title.includes('REST')) badge = '🌐 api';
+          else if (title.includes('Docker')) badge = '🐳 docker';
+          else if (title.includes('Type')) badge = '🔷 ts';
+          else if (title.includes('Git')) badge = '📦 git';
+          else if (title.includes('deploy')) badge = '🚀 deploy';
+          else if (title.includes('JWT') || title.includes('auth')) badge = '🔐 auth';
+          else if (d <=30) badge = '🧱 html/css';
+          else if (d <=60) badge = '⚛️ react';
+          else if (d <=90) badge = '🟢 node';
+          else if (d <=120) badge = '💾 db';
+          else if (d <=150) badge = '☁️ deploy';
+          else badge = '🔧 advanced';
+
+          html += `
+            <div class="day-item" data-dayid="${d}">
+              <input type="checkbox" id="day${d}" data-day="${d}">
+              <a href="Day ${d}/index.html" target="_blank">Day ${d}: ${title}</a>
+              <span class="topic-badge hint">${badge}</span>
+            </div>
+          `;
+        }
+        html += `</div></div>`;
+      }
+      monthsContainer.innerHTML = html;
+    }
+    renderAllDays();
+
+    // ---------- search functionality ----------
+    const searchInput = document.getElementById('searchInput');
+    const monthBlocks = document.querySelectorAll('.month-block');
+    const allDayItems = () => document.querySelectorAll('.day-item');
+
+    function filterTopics() {
+      const term = searchInput.value.trim().toLowerCase();
+      let anyVisible = false;
+
+      monthBlocks.forEach(block => {
+        const items = block.querySelectorAll('.day-item');
+        let blockHasVisible = false;
+
+        items.forEach(item => {
+          const link = item.querySelector('a');
+          if (!link) return;
+          const text = link.innerText.toLowerCase();
+          if (term === '' || text.includes(term)) {
+            item.style.display = 'flex';
+            blockHasVisible = true;
+            anyVisible = true;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // hide entire month block if no visible children
+        block.style.display = blockHasVisible ? 'block' : 'none';
+      });
+
+      // optional no result message (create if needed)
+      let msg = document.getElementById('noResultMsg');
+      if (!anyVisible && term !== '') {
+        if (!msg) {
+          msg = document.createElement('div');
+          msg.id = 'noResultMsg';
+          msg.className = 'no-result';
+          msg.innerText = '✨ no matching days · try another keyword';
+          monthsContainer.parentNode.insertBefore(msg, monthsContainer.nextSibling);
+        }
+      } else if (msg) {
+        msg.remove();
+      }
+    }
+
+    searchInput.addEventListener('input', filterTopics);
+
+    // ---------- progress + localStorage ----------
+    const checkboxes = () => document.querySelectorAll('input[type="checkbox"]');
+    const progressFill = document.getElementById('progressFill');
+    const checkedSpan = document.getElementById('checkedCount');
+
+    function loadSaved() {
+      checkboxes().forEach(cb => {
+        const saved = localStorage.getItem(cb.id);
+        if (saved === 'true') {
+          cb.checked = true;
+          cb.closest('.day-item')?.classList.add('completed');
+        } else {
+          cb.checked = false;
+          cb.closest('.day-item')?.classList.remove('completed');
+        }
+      });
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const total = checkboxes().length; // should be 200
+      const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      const percent = (checked / total) * 100;
+      progressFill.style.width = percent + '%';
+      checkedSpan.innerText = checked;
+    }
+
+    // attach change listeners
+    function attachListeners() {
+      checkboxes().forEach(cb => {
+        cb.removeEventListener('change', handleCheck);
+        cb.addEventListener('change', handleCheck);
+      });
+    }
+
+    function handleCheck(e) {
+      const item = e.target.closest('.day-item');
+      if (e.target.checked) {
+        item?.classList.add('completed');
+        localStorage.setItem(e.target.id, 'true');
+      } else {
+        item?.classList.remove('completed');
+        localStorage.setItem(e.target.id, 'false');
+      }
+      updateProgress();
+    }
+
+    // reset progress
+    document.getElementById('resetProgress').addEventListener('click', () => {
+      if (confirm('Reset all progress?')) {
+        checkboxes().forEach(cb => {
+          cb.checked = false;
+          cb.closest('.day-item')?.classList.remove('completed');
+          localStorage.setItem(cb.id, 'false');
+        });
+        updateProgress();
       }
     });
 
-    function updateProgress() {
-      const total = checkboxes.length;
-      const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
-      const percent = Math.round((checked / total) * 100);
-      progressBar.style.width = percent + '%';
-      progressBar.textContent = percent + '%';
-    }
-
-    checkboxes.forEach(box => {
-      box.addEventListener('change', function() {
-        if (this.checked) {
-          this.parentElement.classList.add('completed');
-          localStorage.setItem(this.id, "true");
-        } else {
-          this.parentElement.classList.remove('completed');
-          localStorage.setItem(this.id, "false");
+    // footer smooth scroll
+    document.querySelectorAll('.footer-nav a[data-month]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const idx = link.getAttribute('data-month');
+        if (idx !== null) {
+          const targetMonth = document.querySelector(`.month-block[data-month-index="${idx}"]`);
+          if (targetMonth) targetMonth.scrollIntoView({ behavior: 'smooth' });
         }
-        updateProgress();
       });
     });
 
-    // Initialize progress bar
-    updateProgress();
-  </script>
+    // init
+    loadSaved();
+    attachListeners();
+
+    // re-attach after search (but items stay same, listeners on checkboxes already)
+    // also any new dynamic changes? no, dom stable.
+  })();
+</script>
 </body>
 </html>
-	
